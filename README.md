@@ -6,7 +6,10 @@ LUT (Look-up Table) files contain the conversion data for transforming the color
 This is often useful when converting between different color profiles. 
 For example, when a footage is recorded in a logarithmic profile, having dull and low-contrast look, LUT is used to restore the natural looking colors. 
 LUT can be also used to simulate a different device look for the video. 
-Another use is to save a color grading present for the given input so that it can be reused again in another project or even in a completely different editing software.
+Another use is to save a color grading present for the given input so that it can be reused again in another project or even in a completely different editing software. 
+Since LUT convert one color value to another, it depends on the input. 
+When using a LUT to reproduce the same look, for example copying the same color grading preset, the input data need to be in the same color profile as the ones used when creating the LUT. 
+For example, using the same camera and the same color profile settings such as logarithmic (V-Log, N-Log, S-Log, ...) etc.
 
 ## Installation
 Simply donwload the `__init__.py` file, open Blender, go to the top menu, Edit, Preferences, Get Extensions, click the top right down arrow, click Install from Disk, and select the downloaded file. 
@@ -33,20 +36,20 @@ Then edit the `config.ocio` file and in the `displays` section, add:
 
 In the `colorspaces` section, add:
 ```
-     - !<ColorSpace>
-        name: LUT_NAME
-        aliases: [LUT_NAME]
-        family: 
-        equalitygroup:
-        bitdepth: 32f
-        description: |
-          LUT_DESCRIPTION
-        isdata: false
-        allocation: uniform
-        to_scene_reference: !<GroupTransform>
-          children:
-            - !<FileTransform> {src: LUT_FILE.cube}
-            - !<ColorSpaceTransform> {src: Linear CIE-XYZ I-E, dst: Rec.1886, direction: inverse}    
+  - !<ColorSpace>
+    name: LUT_NAME
+    aliases: [LUT_NAME]
+    family: 
+    equalitygroup:
+    bitdepth: 32f
+    description: |
+      LUT_DESCRIPTION
+    isdata: false
+    allocation: uniform
+    to_scene_reference: !<GroupTransform>
+      children:
+        - !<FileTransform> {src: LUT_FILE.cube}
+        - !<ColorSpaceTransform> {src: Linear CIE-XYZ I-E, dst: Rec.1886, direction: inverse}    
 ```
 
 Change the LUT_* variables to your own ones. 
@@ -54,6 +57,10 @@ Make sure to keep the same indentation as the rest of the file.
 In the VSE, import your video, select the strip, to to the right panel, open Source folded menu, and select the Color Space marking your LUT.
 
 TODO IMAGE
+
+### Other software
+
+TODO IMAGES showing the same look and import instructions
 
 ## Principle
 This add-on interally copies the adjustment layer into a new scene, adds a color strip under it, changes the color value to iterate over all necessary colors in the LUT, renders the scene, reads the adjusted color, and stores this into the LUT file. 

@@ -1,6 +1,9 @@
 import bpy
+import mathutils
 import tempfile
 import os
+
+import shutil
 
 bl_info = {
     "name": "Blender LUT Exporter",
@@ -47,7 +50,7 @@ class LUT_OT_Export(bpy.types.Operator):
         originalScene = bpy.context.scene
         resolution = context.scene.LUTresolution
         
-        start = 1
+        start = 0
         end = resolution**3
         
         bpy.ops.scene.new(type='EMPTY')   
@@ -61,15 +64,17 @@ class LUT_OT_Export(bpy.types.Operator):
         adjustmentStrip.channel = 2
         adjustmentStrip.frame_final_start = start
         adjustmentStrip.frame_final_end = end
-        colorStrip = bpy.ops.sequencer.effect_strip_add(type = "COLOR", frame_start = start, frame_end = end, channel=1)
+        bpy.ops.sequencer.effect_strip_add(type = "COLOR", frame_start = start, frame_end = end, channel=1, replace_sel = True)
+        colorStrip = adjustmentStrip = context.scene.sequence_editor.active_strip
              
         temp = tempfile.TemporaryDirectory()
-        fileName = "LUTsample.png"
+        fileName = "LUTsample.tif"
         
         renderInfo = bpy.context.scene.render
         renderInfo.resolution_x = 4
         renderInfo.resolution_y = 4
-        renderInfo.image_settings.file_format = "PNG"
+        renderInfo.image_settings.file_format = "TIFF"
+        renderInfo.image_settings.color_depth = "16"
         file = os.path.join(temp.name, fileName)
         renderInfo.filepath = file
         renderInfo.use_sequencer = True
@@ -78,15 +83,20 @@ class LUT_OT_Export(bpy.types.Operator):
         samples = []
 
         for frame in range(start, end):
-            bpy.ops.render.render(write_still=True)
+            idR = frame % resolution
+            idG = (frame // resolution) % resolution
+            idB = (frame // resolution**2) % resolution
+            
+            colorStrip.color = mathutils.Color((idR / (resolution - 1), idG / (resolution - 1), idB / (resolution - 1)))
+            # When using write_still instead of the save(), the colors are always corrected and not right
+            bpy.ops.render.render(write_still=False)
+            bpy.data.images["Render Result"].save_render(file)
             image.source = 'FILE'
             image.filepath = file
             image.reload()
             image.update()  
             samples.append(image.pixels[0:3])
         
-        image.user_clear()
-        bpy.data.images.remove(image)
         bpy.ops.scene.delete()
         bpy.context.window.scene = originalScene    
         temp.cleanup() 
@@ -101,7 +111,6 @@ class LUT_OT_Export(bpy.types.Operator):
             file.write(str(sample[0]) + " " + str(sample[1]) + " " + str(sample[2]) + "\n")            
         file.close()
         return {"FINISHED"}
-
 
 def register():
     if bpy.app.background:
