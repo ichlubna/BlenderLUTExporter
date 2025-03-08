@@ -78,6 +78,8 @@ class LUT_OT_Export(bpy.types.Operator):
         file = os.path.join(temp.name, fileName)
         renderInfo.filepath = file
         renderInfo.use_sequencer = True
+        bpy.context.scene.display_settings.display_device = "sRGB"
+        bpy.context.scene.view_settings.view_transform = "Standard"
 
         image = bpy.data.images.new(fileName, 0, 0)
         samples = []
