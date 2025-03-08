@@ -1,0 +1,11 @@
+schema_version = "1.0.0"
+id = "blender_lut_exporter"
+version = "1.0.0"
+name = "Blender LUT Exporter"
+tagline = "Converts the adjustment layer effects into LUT .cube file which can be reused in different project or software"
+maintainer = "ichlubna <ichlubna@fit.vut.cz>"
+type = "add-on"
+website = "https://github.com/ichlubna/BlenderLUTExporter"
+tags = ["Import-Export", "Sequencer"]
+blender_version_min = "4.2.0"
+license = ["SPDX:GPL-3.0-or-later"]

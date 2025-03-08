@@ -8,14 +8,15 @@ For example, when a footage is recorded in a logarithmic profile, having dull an
 LUT can be also used to simulate a different device look for the video. 
 Another use is to save a color grading present for the given input so that it can be reused again in another project or even in a completely different editing software. 
 Since LUT convert one color value to another, it depends on the input. 
-When using a LUT to reproduce the same look, for example copying the same color grading preset, the input data need to be in the same color profile as the ones used when creating the LUT. 
+When using a LUT to reproduce the same look, for example, copying the same color grading preset, the input data need to be in the same color profile as the ones used when creating the LUT. 
 For example, using the same camera and the same color profile settings such as logarithmic (V-Log, N-Log, S-Log, ...) etc.
 
 ## Installation
-Simply donwload the `__init__.py` file, open Blender, go to the top menu, Edit, Preferences, Get Extensions, click the top right down arrow, click Install from Disk, and select the downloaded file. 
+Simply download the repository, open Blender, go to the top menu, Edit, Preferences, Get Extensions, click the top right down arrow, click Install from Disk, and select the downloaded file. 
 Then enable the add-on by clicking the checkbox at its name.
 
 ## Usage
+How to create and export LUT file in Blender?
 The add-on is available at right VSE panel next to the sequencer window with channels under the LUT bookmark.
 Fill output file with `.cube` extension. 
 Set the desired resolution. 
@@ -24,7 +25,7 @@ Larger resolution leads to slower export and larger file.
 The higher the resolution, the more precisely does the LUT replicate the original colors. 
 Add the adjustment layer in the scene, add modifiers, adjust as necessary, have the layer selected and press the Export button in the add-on's UI.
 
-TODO IMAGE
+![LUT export in Blender](images/LUTExport.gif "LUT export in Blender")
 
 ## How to use the exported LUT
 In Blender, LUT files are imported in the Blender [data path](https://docs.blender.org/manual/en/latest/advanced/blender_directory_layout.html#:~:text=an%20application%20template.-,./datafiles,-Data%20files%20loaded). 
@@ -56,14 +57,23 @@ Change the LUT_* variables to your own ones.
 Make sure to keep the same indentation as the rest of the file.
 In the VSE, import your video, select the strip, to to the right panel, open Source folded menu, and select the Color Space marking your LUT.
 
-TODO IMAGE
+![LUT application in Blender](images/LUTApply.gif "LUT application in Blender")
 
 ### Other software
 
-TODO IMAGES showing the same look and import instructions
+A video frame captured in V-Log is used in the comparison.  
+  
+The setting in Blender with the adjustment layer:  
+![Ajustment layer in Blender](images/blender.webp "Adjustment layer in Blender")
+
+The exported LUT used in Darktable:  
+![LUT application in Darktable](images/darktable.webp "LUT application in Darktable")
+
+The exported LUT used in GIMP:  
+![LUT application in GIMP](images/gimp.webp "LUT application in GIMP")
 
 ## Principle
-This add-on interally copies the adjustment layer into a new scene, adds a color strip under it, changes the color value to iterate over all necessary colors in the LUT, renders the scene, reads the adjusted color, and stores this into the LUT file. 
+This add-on internally copies the adjustment layer into a new scene, adds a color strip under it, changes the color value to iterate over all necessary colors in the LUT, renders the scene, reads the adjusted color, and stores this into the LUT file. 
 The LUT file contains information about the mapping of input color to the output color RGB vector.
 The input vector is not present in the file as it is implicitly defined. 
 This is an example of an identity LUT:
