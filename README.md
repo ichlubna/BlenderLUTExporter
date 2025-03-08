@@ -72,6 +72,9 @@ The exported LUT used in Darktable:
 The exported LUT used in GIMP:  
 ![LUT application in GIMP](images/gimp.webp "LUT application in GIMP")
 
+The exported LUT used in Kdenlive:  
+![LUT application in Kdenlive](images/kdenlive.webp "LUT application in Kdenlive")
+
 ## Principle
 This add-on internally copies the adjustment layer into a new scene, adds a color strip under it, changes the color value to iterate over all necessary colors in the LUT, renders the scene, reads the adjusted color, and stores this into the LUT file. 
 The LUT file contains information about the mapping of input color to the output color RGB vector.
