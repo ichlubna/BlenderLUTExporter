@@ -12,7 +12,7 @@ When using a LUT to reproduce the same look, for example, copying the same color
 For example, using the same camera and the same color profile settings such as logarithmic (V-Log, N-Log, S-Log, ...) etc.
 
 ## Installation
-Simply download the repository, open Blender, go to the top menu, Edit, Preferences, Get Extensions, click the top right down arrow, click Install from Disk, and select the downloaded file. 
+Simply download the archive in [releases](https://github.com/ichlubna/BlenderLUTExporter/releases), open Blender, go to the top menu, Edit, Preferences, Get Extensions, click the top right down arrow, click Install from Disk, and select the downloaded file. 
 Then enable the add-on by clicking the checkbox at its name.
 
 ## Usage
