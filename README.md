@@ -10,6 +10,7 @@ Another use is to save a color grading present for the given input so that it ca
 Since LUT convert one color value to another, it depends on the input. 
 When using a LUT to reproduce the same look, for example, copying the same color grading preset, the input data need to be in the same color profile as the ones used when creating the LUT. 
 For example, using the same camera and the same color profile settings such as logarithmic (V-Log, N-Log, S-Log, ...) etc.
+LUT also cannot reproduce any filters which process the images by blocks like blur, sharpening, etc.
 
 ## Installation
 Simply download the archive in [releases](https://github.com/ichlubna/BlenderLUTExporter/releases), open Blender, go to the top menu, Edit, Preferences, Get Extensions, click the top right down arrow, click Install from Disk, and select the downloaded file. 
