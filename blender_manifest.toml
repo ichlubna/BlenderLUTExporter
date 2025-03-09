@@ -1,6 +1,6 @@
-schema_version = "1.0.1"
+schema_version = "1.0.0"
 id = "blender_lut_exporter"
-version = "1.0.0"
+version = "1.0.1"
 name = "LUT Exporter"
 tagline = "Converts adjustment layer into LUT .cube file"
 maintainer = "ichlubna <ichlubna@fit.vut.cz>"
