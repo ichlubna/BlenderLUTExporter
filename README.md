@@ -18,15 +18,17 @@ Then enable the add-on by clicking the checkbox at its name.
 
 ## Usage
 How to create and export LUT file in Blender?
-The add-on is available at right VSE panel next to the sequencer window with channels under the LUT bookmark.
+Create the adjustment layer in VSE with the desired color grading.
+Go to the top menu under File and Export and click the Adjustment Layer as LUT button.
 Fill output file with `.cube` extension. 
 Set the desired resolution. 
 Standard is resolution of 33 which outputs 33x33x33 LUT file. 
 Larger resolution leads to slower export and larger file. 
 The higher the resolution, the more precisely does the LUT replicate the original colors. 
-Add the adjustment layer in the scene, add modifiers, adjust as necessary, have the layer selected and press the Export button in the add-on's UI.
 
 ![LUT export in Blender](images/LUTExport.gif "LUT export in Blender")
+
+![LUT export window in Blender](images/LUTExportEnd.webp "LUT export window in Blender")
 
 ## How to use the exported LUT
 In Blender, LUT files are imported in the Blender [data path](https://docs.blender.org/manual/en/latest/advanced/blender_directory_layout.html#:~:text=an%20application%20template.-,./datafiles,-Data%20files%20loaded). 
