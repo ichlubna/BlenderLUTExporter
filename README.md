@@ -31,7 +31,9 @@ The higher the resolution, the more precisely does the LUT replicate the origina
 ![LUT export window in Blender](images/LUTExportEnd.webp "LUT export window in Blender")
 
 ## How to use the exported LUT
-In Blender, LUT files are imported in the Blender [data path](https://docs.blender.org/manual/en/latest/advanced/blender_directory_layout.html#:~:text=an%20application%20template.-,./datafiles,-Data%20files%20loaded). 
+One option is to use an importer addon like [this one](https://github.com/tin2tin/3D_LUT_Import_VSE).
+LUT can be also imported in Blender manually and used in the standard workflow.
+LUT files are stored in the Blender [data path](https://docs.blender.org/manual/en/latest/advanced/blender_directory_layout.html#:~:text=an%20application%20template.-,./datafiles,-Data%20files%20loaded). 
 In the `datafiles/colormanagement/`, insert the `.cube` LUT file into the `luts` directory.
 Then edit the `config.ocio` file and in the `displays` section, add:
 ```
