@@ -13,7 +13,9 @@ For example, using the same camera and the same color profile settings such as l
 LUT also cannot reproduce any filters which process the images by blocks like blur, sharpening, etc.
 
 ## Installation
-Simply download the archive in [releases](https://github.com/ichlubna/BlenderLUTExporter/releases), open Blender, go to the top menu, Edit, Preferences, Get Extensions, click the top right down arrow, click Install from Disk, and select the downloaded file. 
+The easiest way is to go to the Blender top menu, Edit, Preferences, Get Extensions and type LUT Exporter.
+The extension is published at the official [database](https://extensions.blender.org/approval-queue/blender-lut-exporter).
+When installing manually, download the archive in [releases](https://github.com/ichlubna/BlenderLUTExporter/releases), open Blender, go to the top menu, Edit, Preferences, Get Extensions, click the top right down arrow, click Install from Disk, and select the downloaded file. 
 Then enable the add-on by clicking the checkbox at its name.
 
 ## Usage
