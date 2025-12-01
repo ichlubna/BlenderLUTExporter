@@ -9,7 +9,7 @@ bl_info = {
     "description": "Converts the adjustment layer effects into LUT .cube file which can be reused in different project or software",
     "author": "ichlubna",
     "version": (1, 0),
-    "blender": (4, 2, 0),
+    "blender": (5, 0, 0),
     "location": "VSE",
     "warning": "",
     "tracker_url": "https://github.com/ichlubna/BlenderLUTExporter",
