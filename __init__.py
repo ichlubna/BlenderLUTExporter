@@ -27,14 +27,14 @@ class LUT_OT_Export(bpy.types.Operator, ExportHelper):
     LUTresolution: bpy.props.IntProperty(name="LUT resolution", description="The amount of samples - dimension of the LUT cube (higher increases the quality but results in higher file size and slower export)", default=33, min=0)
 
     def getSamples(self, context):
-        context.scene.sequence_editor.active_strip.select = True
+        context.sequencer_scene.sequence_editor.active_strip.select = True
         bpy.ops.sequencer.copy()
-        originalScene = bpy.context.scene
+        originalScene = bpy.context.sequencer_scene
         
         start = 0
         end = self.LUTresolution**3
         
-        bpy.ops.scene.new(type='EMPTY')   
+        bpy.ops.scene.new_sequencer_scene() 
         bpy.context.scene.name = "LUTSamplingScene"  
         bpy.context.scene.frame_start = start
         bpy.context.scene.frame_end = end
@@ -45,13 +45,20 @@ class LUT_OT_Export(bpy.types.Operator, ExportHelper):
             screen = window.screen
             for area in screen.areas:
                 if area.type == 'SEQUENCE_EDITOR':
-                    with bpy.context.temp_override(window=window, area=area):
+                    region = next(r for r in area.regions if r.type == 'WINDOW')
+                    override = {
+                        "window": window,
+                        "screen": screen,
+                        "area": area,
+                        "region": region
+                    }
+                    with bpy.context.temp_override(**override):
                         bpy.ops.sequencer.paste()
                         adjustmentStrip = context.scene.sequence_editor.active_strip
-                        bpy.ops.sequencer.effect_strip_add(type = "COLOR", frame_start = start, frame_end = end, channel=1, replace_sel = True)
+                        bpy.ops.sequencer.effect_strip_add(type = "COLOR", move_strips=False, frame_start = start, length = end-start, channel=1, replace_sel = True)
                         colorStrip = context.scene.sequence_editor.active_strip
                         break
-        
+    
         adjustmentStrip.channel = 2
         adjustmentStrip.frame_final_start = start
         adjustmentStrip.frame_final_end = end        
@@ -95,7 +102,7 @@ class LUT_OT_Export(bpy.types.Operator, ExportHelper):
 
     @classmethod
     def poll(cls, context):
-        activeStrip = context.scene.sequence_editor.active_strip
+        activeStrip = context.sequencer_scene.sequence_editor.active_strip
         if activeStrip == None: 
             return False
         if activeStrip.type != "ADJUSTMENT":  
