@@ -35,13 +35,13 @@ class LUT_OT_Export(bpy.types.Operator, ExportHelper):
         end = self.LUTresolution**3
         
         bpy.ops.scene.new_sequencer_scene() 
-        bpy.context.scene.name = "LUTSamplingScene"  
-        bpy.context.scene.frame_start = start
-        bpy.context.scene.frame_end = end
+        context.scene.name = "LUTSamplingScene"  
+        context.scene.frame_start = start
+        context.scene.frame_end = end
         
         colorStrip = None
         adjustmentStrip = None
-        for window in bpy.context.window_manager.windows:
+        for window in context.window_manager.windows:
             screen = window.screen
             for area in screen.areas:
                 if area.type == 'SEQUENCE_EDITOR':
@@ -52,7 +52,7 @@ class LUT_OT_Export(bpy.types.Operator, ExportHelper):
                         "area": area,
                         "region": region
                     }
-                    with bpy.context.temp_override(**override):
+                    with context.temp_override(**override):
                         bpy.ops.sequencer.paste()
                         adjustmentStrip = context.scene.sequence_editor.active_strip
                         bpy.ops.sequencer.effect_strip_add(type = "COLOR", move_strips=False, frame_start = start, length = end-start, channel=1, replace_sel = True)
@@ -66,7 +66,7 @@ class LUT_OT_Export(bpy.types.Operator, ExportHelper):
         temp = tempfile.TemporaryDirectory()
         fileName = "LUTsample.tif"
         
-        renderInfo = bpy.context.scene.render
+        renderInfo = context.scene.render
         renderInfo.resolution_x = 4
         renderInfo.resolution_y = 4
         renderInfo.image_settings.file_format = "TIFF"
@@ -74,8 +74,8 @@ class LUT_OT_Export(bpy.types.Operator, ExportHelper):
         file = os.path.join(temp.name, fileName)
         renderInfo.filepath = file
         renderInfo.use_sequencer = True
-        bpy.context.scene.display_settings.display_device = "sRGB"
-        bpy.context.scene.view_settings.view_transform = "Standard"
+        context.scene.display_settings.display_device = "sRGB"
+        context.scene.view_settings.view_transform = "Standard"
 
         image = bpy.data.images.new(fileName, 0, 0)
         samples = []
@@ -96,7 +96,7 @@ class LUT_OT_Export(bpy.types.Operator, ExportHelper):
             samples.append(image.pixels[0:3])
         
         bpy.ops.scene.delete()
-        bpy.context.window.scene = originalScene    
+        context.workspace.sequencer_scene = originalScene
         temp.cleanup() 
         return samples   
 
