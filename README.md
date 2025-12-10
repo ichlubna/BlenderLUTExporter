@@ -1,5 +1,5 @@
-# Blender LUT Exporter
-This add-on enables export of the color adjustment in Blender VSE (Video Sequence Editor) into a .cube LUT file.
+# Blender LUT Exporter & Importer
+This add-on enables export of the color adjustment in Blender VSE (Video Sequence Editor) into a .cube LUT file and vice versa.
 
 ## LUT
 LUT (Look-up Table) files contain the conversion data for transforming the colors of video or image into different colors. 
@@ -16,24 +16,29 @@ LUT also cannot reproduce any filters which process the images by blocks like bl
 The easiest way is to go to the Blender top menu, Edit, Preferences, Get Extensions and type LUT Exporter.
 The extension is published at the official [database](https://extensions.blender.org/approval-queue/blender-lut-exporter).
 When installing manually, download the archive in [releases](https://github.com/ichlubna/BlenderLUTExporter/releases), open Blender, go to the top menu, Edit, Preferences, Get Extensions, click the top right down arrow, click Install from Disk, and select the downloaded file. 
-Then enable the add-on by clicking the checkbox at its name.
+Then enable the add-on by clicking the checkbox at its name. 
 
 ## Usage
-How to create and export LUT file in Blender?
-Create the adjustment layer in VSE with the desired color grading.
-Go to the top menu under File and Export and click the Adjustment Layer as LUT button.
+How to create and export LUT file in Blender? 
+Create the adjustment layer in VSE with the desired color grading. 
+Go to the top menu under File and Export and click the Adjustment Layer as LUT button. 
 Fill output file with `.cube` extension. 
 Set the desired resolution. 
 Standard is resolution of 33 which outputs 33x33x33 LUT file. 
 Larger resolution leads to slower export and larger file. 
 The higher the resolution, the more precisely does the LUT replicate the original colors. 
+The reference display and view transform in the export dialogue is the color transform that is expected in the input strip.
 
 ![LUT export in Blender](images/LUTExport.gif "LUT export in Blender")
 
 ![LUT export window in Blender](images/LUTExportEnd.webp "LUT export window in Blender")
 
+The import is straightforward via the Import menu.
+The imported file is added as a new Adjustment layer in the active video sequence editor.
+
 ## How to use the exported LUT
-One option is to use an importer addon like [this one](https://github.com/tin2tin/3D_LUT_Import_VSE).
+The LUT can be imported using the inbuilt import operator, similar to the export.
+Another option is to use an importer addon like [this one](https://github.com/tin2tin/3D_LUT_Import_VSE).
 LUT can be also imported in Blender manually and used in the standard workflow.
 LUT files are stored in the Blender [data path](https://docs.blender.org/manual/en/latest/advanced/blender_directory_layout.html#:~:text=an%20application%20template.-,./datafiles,-Data%20files%20loaded). 
 In the `datafiles/colormanagement/`, insert the `.cube` LUT file into the `luts` directory.
@@ -126,4 +131,8 @@ The order of the colors is always by increasing the channels starting with red i
 The values are normalized. 
 The step is deduced by the resolution of the LUT which is defined at the beginning. 
 The total number of the colors is then SIZE^3. 
-The colors which are not covered in the LUT are interpolated from the nearest defined ones.
+The colors which are not covered in the LUT are interpolated from the nearest defined ones. 
+
+A new adjustment layer with Compositor modifier is created during import. 
+The LUT file is converted into a 2D texture containing SIZE blocks with per-block resolution of SIZE^2.
+The compositor nodes use trilinear interpolation and sample the texture using the input RGB vector as the index.
