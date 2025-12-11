@@ -413,6 +413,8 @@ class LUT_OT_Import(bpy.types.Operator, ImportHelper):
             with context.temp_override(**override):
                 bpy.ops.sequencer.effect_strip_add(type = "ADJUSTMENT", move_strips=False, frame_start = 0, length = 100, channel=1, replace_sel = True)
                 adjustmentStrip = context.scene.sequence_editor.active_strip
+                if adjustmentStrip == None:
+                    adjustmentStrip = context.sequencer_scene.sequence_editor.strips[-1]
                 adjustmentStrip.name = "LUT"
                 bpy.ops.sequencer.strip_modifier_add(type = "COMPOSITOR")
                 modifier = adjustmentStrip.modifiers[-1]
