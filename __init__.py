@@ -169,7 +169,9 @@ class LUT_OT_Export(bpy.types.Operator, ExportHelper):
         image.colorspace_settings.is_data = True
         samples = []
 
+        context.window_manager.progress_begin(min=start, max=end)
         for frame in range(start, end):
+            bpy.context.window_manager.progress_update(value=frame)
             colorStrip.color = lutInputVector(frame, self.LUTresolution) 
             # When using write_still instead of the save(), the colors are always corrected and not right
             bpy.ops.render.render(write_still=False)
@@ -180,6 +182,7 @@ class LUT_OT_Export(bpy.types.Operator, ExportHelper):
             image.update()  
             samples.append(image.pixels[0:3])
         
+        bpy.context.window_manager.progress_end()
         bpy.ops.scene.delete()
         context.workspace.sequencer_scene = originalScene
         temp.cleanup() 
