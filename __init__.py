@@ -257,8 +257,6 @@ class LUT_OT_Import(bpy.types.Operator, ImportHelper):
         texture.colorspace_settings.is_data = True
         length = size**3
         pixels = array.array('f', [1.0] * (length*4))
-        print(len(texture.pixels))
-        print(length*4)
         step = 1.0/(size-1)
         for index in range(0, length):
             inputColor = lutInputVector(index, size)
