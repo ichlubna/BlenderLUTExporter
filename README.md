@@ -27,7 +27,9 @@ Set the desired resolution.
 Standard is resolution of 33 which outputs 33x33x33 LUT file. 
 Larger resolution leads to slower export and larger file. 
 The higher the resolution, the more precisely does the LUT replicate the original colors. 
-The reference display and view transform in the export dialogue is the color transform that is expected in the input strip.
+The reference Color Space in the export dialogue is the color transform that is expected in the input strip. 
+If the strip has different Color Space, it can be changed in the LUT import dialogue. 
+It marks the original color profile that is expected to be used on the footage before applying the LUT.  
 
 ![LUT export in Blender](images/LUTExport.gif "LUT export in Blender")
 
@@ -35,6 +37,8 @@ The reference display and view transform in the export dialogue is the color tra
 
 The import is straightforward via the Import menu.
 The imported file is added as a new Adjustment layer in the active video sequence editor.
+The input strip needs to be set in the Linear Rec.709 color space or Working Space used during export. 
+The original color space is written in the exported LUT file.
 
 ## How to use the exported LUT
 The LUT can be imported using the inbuilt import operator, similar to the export.
