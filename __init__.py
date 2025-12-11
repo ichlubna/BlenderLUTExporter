@@ -10,7 +10,7 @@ from bpy_extras.io_utils import ExportHelper
 from bpy_extras.io_utils import ImportHelper
 
 bl_info = {
-    "name": "LUT Exporter & Importer",
+    "name": "LUT Exporter and Importer",
     "description": "Converts the adjustment layer effects into LUT .cube file and back",
     "author": "ichlubna",
     "version": (2, 0),
